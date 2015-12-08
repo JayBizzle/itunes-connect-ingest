@@ -6,10 +6,10 @@ class ITCIngest
     public $password;
     public $vndnumber;
     public $filename;
+    public $date;
 
     public function __construct($username, $password, $vndnumber)
     {
-        echo 'woop';
         $this->username = $username;
         $this->password = $password;
         $this->vndnumber = $vndnumber;
@@ -18,6 +18,7 @@ class ITCIngest
     public function getData($date)
     {
         $this->filename = "{$date}-{$this->vndnumber}";
+        $this->date = $date;
         if ($this->sendRequest()) {
             $this->processCsv();
         }
@@ -32,7 +33,7 @@ class ITCIngest
             'TYPEOFREPORT' => 'Sales',
             'DATETYPE'     => 'Daily',
             'REPORTTYPE'   => 'Summary',
-            'REPORTDATE'   => $date,
+            'REPORTDATE'   => $this->date,
         ]);
     }
 
