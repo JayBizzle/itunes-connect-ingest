@@ -28,7 +28,7 @@ class ITCIngest
 
     public function buildParams()
     {
-        return http_build_query([
+        return http_build_query(array(
             'USERNAME'     => $this->username,
             'PASSWORD'     => $this->password,
             'VNDNUMBER'    => $this->vndnumber,
@@ -36,7 +36,7 @@ class ITCIngest
             'DATETYPE'     => 'Daily',
             'REPORTTYPE'   => 'Summary',
             'REPORTDATE'   => $this->date,
-        ]);
+        ));
     }
 
     public function sendRequest()
@@ -88,8 +88,7 @@ class ITCIngest
 
     public function keysToCamel($array)
     {
-        array_walk($array, function(&$value)
-        {
+        array_walk($array, function (&$value) {
             $value = lcfirst(str_replace(' ', '', ucwords(strtolower($value))));
         });
 
