@@ -1,5 +1,7 @@
 <?php
 
+namespace Jaybizzle;
+
 class ITCIngest
 {
     public $username;
@@ -40,7 +42,7 @@ class ITCIngest
     public function sendRequest()
     {
         $ch = curl_init();
-        $fp = fopen("$filename.gz", 'w');
+        $fp = fopen("$this->filename.gz", 'w');
 
         //set the url, number of POST vars, POST data
         curl_setopt($ch, CURLOPT_URL, 'https://reportingitc.apple.com/autoingestion.tft');
@@ -83,5 +85,5 @@ class ITCIngest
     }
 }
 
-$itc = new ITCIngest('itunesconnect@emailaddress.com', 'itun3sp455word', 'nndnumber');
-$itc->getData('20151207');
+// $itc = new ITCIngest('itunesconnect@emailaddress.com', 'itun3sp455word', 'nndnumber');
+// $itc->getData('20151207');
