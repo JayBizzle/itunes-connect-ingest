@@ -85,10 +85,7 @@ class ITCIngest
             $this->cleanup();
         }
     }
-}
 
-// $itc = new ITCIngest('itunesconnect@emailaddress.com', 'itun3sp455word', 'nndnumber');
-// $itc->getData('20151207');
     public function keysToCamel($array)
     {
         array_walk($array, function(&$value)
@@ -104,3 +101,4 @@ class ITCIngest
         unlink("$this->filename.gz");
         unlink("$this->filename");
     }
+}
