@@ -68,6 +68,8 @@ class ITCIngest
                 // get first line to use as array keys
                 $columns = fgetcsv($handle, 0, "\t");
 
+                $columns = $this->keysToCamel($columns);
+
                 while (($data = fgetcsv($handle, 0, "\t")) !== false) {
                     var_dump(array_combine($columns, $data));
                 }
@@ -87,6 +89,16 @@ class ITCIngest
 
 // $itc = new ITCIngest('itunesconnect@emailaddress.com', 'itun3sp455word', 'nndnumber');
 // $itc->getData('20151207');
+    public function keysToCamel($array)
+    {
+        array_walk($array, function(&$value)
+        {
+            $value = lcfirst(str_replace(' ', '', ucwords(strtolower($value))));
+        });
+
+        return $array;
+    }
+
     public function cleanup()
     {
         unlink("$this->filename.gz");
