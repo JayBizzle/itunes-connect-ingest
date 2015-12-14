@@ -77,13 +77,18 @@ class ITCIngest
                 echo "Could not open $this->filename for reading".PHP_EOL;
             }
 
-            unlink("$this->filename");
+            $this->cleanup();
         } else {
             echo 'File is of size 0'.PHP_EOL;
-            unlink("$this->filename.gz");
+            $this->cleanup();
         }
     }
 }
 
 // $itc = new ITCIngest('itunesconnect@emailaddress.com', 'itun3sp455word', 'nndnumber');
 // $itc->getData('20151207');
+    public function cleanup()
+    {
+        unlink("$this->filename.gz");
+        unlink("$this->filename");
+    }
