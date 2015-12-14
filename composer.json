@@ -1,0 +1,26 @@
+{
+    "name": "jaybizzle/itunes-connect-ingest",
+    "type": "library",
+    "description": "A simple PHP library to get sales/download data from iTunes Connect",
+    "keywords": ["itunes", "connect", "ingest", "sales", "data", "downloads"],
+    "homepage": "https://github.com/JayBizzle/itunes-connect-ingest",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mark Beech",
+            "email": "mbeech@mark-beech.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jaybizzle\\": "src/"
+        }
+    }
+}
