@@ -19,9 +19,10 @@ class ITCIngest
     }
 
     /**
-     * Initiate ITC Ingest
+     * Initiate ITC Ingest.
      * 
-     * @param  string $date DD/MM/YYYY
+     * @param string $date DD/MM/YYYY
+     *
      * @return array
      */
     public function getData($date)
@@ -34,13 +35,13 @@ class ITCIngest
     }
 
     /**
-     * Build the post paramateres
+     * Build the post paramateres.
      * 
      * @return string
      */
     public function buildParams()
     {
-        return http_build_query(array(
+        return http_build_query([
             'USERNAME'     => $this->username,
             'PASSWORD'     => $this->password,
             'VNDNUMBER'    => $this->vndnumber,
@@ -48,11 +49,11 @@ class ITCIngest
             'DATETYPE'     => 'Daily',
             'REPORTTYPE'   => 'Summary',
             'REPORTDATE'   => $this->date,
-        ));
+        ]);
     }
 
     /**
-     * Execute the post request
+     * Execute the post request.
      * 
      * @return mixed
      */
@@ -73,14 +74,13 @@ class ITCIngest
     }
 
     /**
-     * Process the CSV data
+     * Process the CSV data.
      * 
      * @return array
      */
     public function processCsv()
     {
         if (filesize("$this->filename.gz")) {
-            
             $this->decode();
 
             if (($handle = fopen("$this->filename", 'r')) !== false) {
@@ -108,7 +108,7 @@ class ITCIngest
     }
 
     /**
-     * Extract the .gz file
+     * Extract the .gz file.
      * 
      * @return void
      */
@@ -118,9 +118,10 @@ class ITCIngest
     }
 
     /**
-     * Convert array keys to camel case
+     * Convert array keys to camel case.
      * 
-     * @param  array $array
+     * @param array $array
+     *
      * @return array
      */
     public function keysToCamel($array)
@@ -133,7 +134,7 @@ class ITCIngest
     }
 
     /**
-     * Cleanup temporay files
+     * Cleanup temporay files.
      * 
      * @return void
      */
