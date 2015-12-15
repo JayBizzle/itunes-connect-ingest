@@ -5,3 +5,15 @@ iTunes Connect Ingest
 `composer require jaybizzle/itunes-connect-ingest`
 
 
+#### Usage
+```php
+use Jaybizzle\ITCIngest;
+
+$itc = new ITCIngest('itunesconnect@emailaddress.com', 'itun3sp455word', 'vendorid');
+$itc->getData('20151207');
+```
+
+#### Where do I find my Vendor ID
+See here - http://blog.exiconglobal.com/appstore-developerid-vendorid
+
+
