@@ -90,7 +90,7 @@ class ITCIngest
                 $columns = $this->keysToCamel($columns);
 
                 while (($data = fgetcsv($handle, 0, "\t")) !== false) {
-                    $this->data[] = array_combine($columns, $data);
+                    $this->data[$this->date][] = array_combine($columns, $data);
                 }
 
                 fclose($handle);
