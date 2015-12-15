@@ -9,6 +9,7 @@ class ITCIngest
     public $vndnumber;
     public $filename;
     public $date;
+    public $data = [];
 
     public function __construct($username, $password, $vndnumber)
     {
@@ -17,15 +18,26 @@ class ITCIngest
         $this->vndnumber = $vndnumber;
     }
 
+    /**
+     * Initiate ITC Ingest
+     * 
+     * @param  string $date DD/MM/YYYY
+     * @return array
+     */
     public function getData($date)
     {
         $this->filename = "{$date}-{$this->vndnumber}";
         $this->date = $date;
         if ($this->sendRequest()) {
-            $this->processCsv();
+            return $this->processCsv();
         }
     }
 
+    /**
+     * Build the post paramateres
+     * 
+     * @return string
+     */
     public function buildParams()
     {
         return http_build_query(array(
@@ -39,30 +51,37 @@ class ITCIngest
         ));
     }
 
+    /**
+     * Execute the post request
+     * 
+     * @return mixed
+     */
     public function sendRequest()
     {
         $ch = curl_init();
         $fp = fopen("$this->filename.gz", 'w');
 
-        //set the url, number of POST vars, POST data
+        // set the url, number of POST vars, POST data
         curl_setopt($ch, CURLOPT_URL, 'https://reportingitc.apple.com/autoingestion.tft');
         curl_setopt($ch, CURLOPT_POST, 7);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->buildParams());
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_FILE, $fp);
 
-        //execute post
+        // execute post request
         return curl_exec($ch);
     }
 
+    /**
+     * Process the CSV data
+     * 
+     * @return array
+     */
     public function processCsv()
     {
         if (filesize("$this->filename.gz")) {
-            if (function_exists('gzdecode')) {
-                file_put_contents($this->filename, gzdecode(file_get_contents("$this->filename.gz")));
-            } else {
-                exec("gunzip $this->filename.gz");
-            }
+            
+            $this->decode();
 
             if (($handle = fopen("$this->filename", 'r')) !== false) {
                 // get first line to use as array keys
@@ -71,7 +90,7 @@ class ITCIngest
                 $columns = $this->keysToCamel($columns);
 
                 while (($data = fgetcsv($handle, 0, "\t")) !== false) {
-                    var_dump(array_combine($columns, $data));
+                    $this->data[] = array_combine($columns, $data);
                 }
 
                 fclose($handle);
@@ -80,12 +99,30 @@ class ITCIngest
             }
 
             $this->cleanup();
+
+            return $this->data;
         } else {
             echo 'File is of size 0'.PHP_EOL;
             $this->cleanup();
         }
     }
 
+    /**
+     * Extract the .gz file
+     * 
+     * @return void
+     */
+    public function decode()
+    {
+        file_put_contents($this->filename, gzdecode(file_get_contents("$this->filename.gz")));
+    }
+
+    /**
+     * Convert array keys to camel case
+     * 
+     * @param  array $array
+     * @return array
+     */
     public function keysToCamel($array)
     {
         array_walk($array, function (&$value) {
@@ -95,6 +132,11 @@ class ITCIngest
         return $array;
     }
 
+    /**
+     * Cleanup temporay files
+     * 
+     * @return void
+     */
     public function cleanup()
     {
         unlink("$this->filename.gz");
