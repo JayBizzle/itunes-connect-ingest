@@ -140,11 +140,11 @@ class ITCIngest
      */
     public function cleanup()
     {
-        if(file_exists("$this->filename.gz")) {
+        if (file_exists("$this->filename.gz")) {
             unlink("$this->filename.gz");
         }
-        
-        if(file_exists("$this->filename")) {
+
+        if (file_exists("$this->filename")) {
             unlink("$this->filename");
         }
     }
