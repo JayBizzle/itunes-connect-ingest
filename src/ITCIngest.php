@@ -20,7 +20,7 @@ class ITCIngest
 
     /**
      * Initiate ITC Ingest.
-     * 
+     *
      * @param string $date DD/MM/YYYY
      *
      * @return array
@@ -36,7 +36,7 @@ class ITCIngest
 
     /**
      * Build the post paramateres.
-     * 
+     *
      * @return string
      */
     public function buildParams()
@@ -54,7 +54,7 @@ class ITCIngest
 
     /**
      * Execute the post request.
-     * 
+     *
      * @return mixed
      */
     public function sendRequest()
@@ -75,7 +75,7 @@ class ITCIngest
 
     /**
      * Process the CSV data.
-     * 
+     *
      * @return array
      */
     public function processCsv()
@@ -109,7 +109,7 @@ class ITCIngest
 
     /**
      * Extract the .gz file.
-     * 
+     *
      * @return void
      */
     public function decode()
@@ -119,7 +119,7 @@ class ITCIngest
 
     /**
      * Convert array keys to camel case.
-     * 
+     *
      * @param array $array
      *
      * @return array
@@ -135,7 +135,7 @@ class ITCIngest
 
     /**
      * Cleanup temporay files.
-     * 
+     *
      * @return void
      */
     public function cleanup()
